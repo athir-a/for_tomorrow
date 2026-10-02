@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -10,45 +10,42 @@
     <!-- Screens -->
     <section id="menu" class="screen">
       <div class="stars"></div>
-      <button class="hamburger" id="hamburger" aria-label="Open menu">
-        <span></span>
-      </button>
-      <nav class="drawer" id="drawer" aria-label="Site menu">
-        <div class="menu-topbar">
-          <button id="menu-back-btn" class="menu-back">←</button>
-          <div class="menu-title">For Tomorrow</div>
-        </div>
 
+      <!-- Backdrop: clicking it closes the drawer -->
+      <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <span class="bar bar-top"></span>
+        <span class="bar bar-mid"></span>
+        <span class="bar bar-bot"></span>
+      </button>
+
+      <nav class="drawer" id="drawer" aria-label="Site menu" aria-hidden="true">
+        <!-- Header -->
+        <div class="menu-topbar">
+          <span class="menu-leaf" aria-hidden="true">🌱</span>
+          <div class="menu-title">FOR TOMORROW</div>
+          <button class="menu-close" id="menuClose" aria-label="Close menu">&#x2715;</button>
+        </div>
+        <div class="menu-divider"></div>
+
+        <!-- Nav items -->
         <ul class="menu-items">
-          <li><a href="#">My Profile</a></li>
-          <li><a href="#">School Events</a></li>
-          <li><a href="#">Daily Challenges</a></li>
-          <li><a href="#">Real‑World Tasks</a></li>
-          <li><a href="#">Leaderboard</a></li>
-          <li><a href="#">Achievements & Titles</a></li>
-          <li><a href="#">Eco Resources</a></li>
-          <li><a href="#">Settings</a></li>
-          <li><a href="#">Help & Safety</a></li>
-          <li><a href="#">Credits</a></li>
+          <li><a href="#" data-nav="profile">    <span class="mi-icon">🌱</span> My Profile</a></li>
+          <li><a href="#" data-nav="events">     <span class="mi-icon">🏫</span> School Events</a></li>
+          <li><a href="#" data-nav="challenges"> <span class="mi-icon">⚡</span> Daily Challenges</a></li>
+          <li><a href="#" data-nav="tasks">      <span class="mi-icon">🌍</span> Real&#8209;World Tasks</a></li>
+          <li><a href="#" data-nav="leaderboard"><span class="mi-icon">🏆</span> Leaderboard</a></li>
+          <li><a href="#" data-nav="achievements"><span class="mi-icon">🎖️</span> Achievements &amp; Titles</a></li>
+          <li><a href="#" data-nav="resources">  <span class="mi-icon">📚</span> Eco Resources</a></li>
+          <li class="mi-divider"></li>
+          <li><a href="#" data-nav="settings">   <span class="mi-icon">⚙️</span> Settings</a></li>
+          <li><a href="#" data-nav="help">       <span class="mi-icon">🛡️</span> Help &amp; Safety</a></li>
+          <li><a href="#" data-nav="credits">    <span class="mi-icon">🎬</span> Credits</a></li>
         </ul>
 
-        <!--<div class="menu-header">
-          <button id="menu-back-btn" class="menu-back">← Back</button>
-        </div>
-        <h3>For Tomorrow</h3>
-
-        <ul>
-          <li><a href="#" data-nav="profile">My Profile</a></li>
-          <li><a href="#" data-nav="events">School Events</a></li>
-          <li><a href="#" data-nav="challenges">Daily Challenges</a></li>
-          <li><a href="#" data-nav="tasks">Real‑World Tasks</a></li>
-          <li><a href="#" data-nav="leaderboard">Leaderboard</a></li>
-          <li><a href="#" data-nav="achievements">Achievements & Titles</a></li>
-          <li><a href="#" data-nav="shop">Cosmetics Shop (eco)</a></li>
-          <li><a href="#" data-nav="resources">Eco Resources</a></li>
-          <li><a href="#" data-nav="settings">Settings</a></li>
-          <li><a href="#" data-nav="help">Help & Safety</a></li>
-        </ul>-->
+        <!-- Footer -->
+        <div class="menu-footer">v0.1 &mdash; Pixel Eco Quest</div>
       </nav>
 
       <div class="logo-wrapper">
@@ -99,13 +96,13 @@
             text-shadow: 0 4px 0 #09223a;
           "
         >
-          Loading…
+          Loading&hellip;
         </h1>
       </div>
       <div class="loader" aria-label="Loading bar"></div>
       <p class="quote">
-        “at the end of the day we are just slightly evolved monkeys on a
-        floating piece of rock”
+        &ldquo;at the end of the day we are just slightly evolved monkeys on a
+        floating piece of rock&rdquo;
       </p>
     </section>
 
@@ -121,7 +118,7 @@
       </div>
       <p class="center" style="opacity: 0.8; max-width: 880px">
         No rules. No hints. Just a road that waits. Every step whispers of
-        what’s ahead. Keep moving, and tomorrow will reveal itself. Walk for
+        what&apos;s ahead. Keep moving, and tomorrow will reveal itself. Walk for
         tomorrow.
       </p>
     </section>
