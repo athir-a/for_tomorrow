@@ -1,3 +1,9 @@
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach((s) => s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
 // ── Hamburger / Drawer ───────────────────────────────────────────────────────
 const hamburger = document.getElementById("hamburger");
 const drawer     = document.getElementById("drawer");
@@ -31,12 +37,12 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && drawer.classList.contains("open")) closeMenu();
 });
 
-// Trap focus inside the drawer while it's open
+// Focus trap inside the drawer
 drawer.addEventListener("keydown", (e) => {
   if (e.key !== "Tab") return;
   const focusable = Array.from(
-    drawer.querySelectorAll('a[href], button:not([disabled])')
-  ).filter((el) => !el.closest('[aria-hidden="true"]'));
+    drawer.querySelectorAll("a[href], button:not([disabled])")
+  );
   if (!focusable.length) return;
   const first = focusable[0];
   const last  = focusable[focusable.length - 1];
@@ -46,6 +52,31 @@ drawer.addEventListener("keydown", (e) => {
     e.preventDefault(); first.focus();
   }
 });
+
+// ── Credits ───────────────────────────────────────────────────────────────────
+function openCredits() {
+  closeMenu();
+  // Reset the crawl animation so it plays from scratch every time
+  const wrap = document.querySelector(".crawl-wrap");
+  wrap.style.animation = "none";
+  void wrap.offsetWidth; // reflow
+  wrap.style.animation = "";
+  showScreen("credits");
+}
+
+// From hud-button
+document.getElementById("btnCredits").addEventListener("click", openCredits);
+
+// From nav drawer item (data-nav="credits")
+document.querySelector('[data-nav="credits"]').addEventListener("click", (e) => {
+  e.preventDefault();
+  openCredits();
+});
+
+// Back button on credits screen
+document.getElementById("creditsBack").addEventListener("click", () =>
+  showScreen("menu")
+);
 
 // ── Sun / Island hover zone ──────────────────────────────────────────────────
 const area     = document.getElementById("islandArea");
@@ -63,34 +94,32 @@ function showPromptText() {
 area.addEventListener("mousemove", (e) => {
   const rect      = area.getBoundingClientRect();
   const mouseY    = e.clientY - rect.top;
-  const threshold = rect.height * 0.25; // top quarter activates
+  const threshold = rect.height * 0.25;
   if (mouseY < threshold) {
-    sun.style.transform = "translateY(-10px)";
-    glow.style.opacity  = 1;
+    sun.style.transform    = "translateY(-10px)";
+    glow.style.opacity     = 1;
     promptEl.style.opacity = 1;
   } else {
-    sun.style.transform = "translateY(45px)";
-    glow.style.opacity  = 0;
+    sun.style.transform    = "translateY(45px)";
+    glow.style.opacity     = 0;
     promptEl.style.opacity = 0;
   }
 });
 area.addEventListener("mouseleave", () => {
-  sun.style.transform = "translateY(45px)";
-  glow.style.opacity  = 0;
+  sun.style.transform    = "translateY(45px)";
+  glow.style.opacity     = 0;
   promptEl.style.opacity = 0;
 });
 
-// ── Clicking the sun or "Start" → loading → minigame ────────────────────────
+// ── Start / Loading → Minigame ───────────────────────────────────────────────
 function goToLoading() {
-  document.getElementById("menu").classList.add("hidden");
-  document.getElementById("loading").classList.remove("hidden");
+  showScreen("loading");
   setTimeout(() => {
-    document.getElementById("loading").classList.add("hidden");
-    document.getElementById("minigame").classList.remove("hidden");
+    showScreen("minigame");
     // Reset loader animation for future visits
     const bar = document.querySelector(".loader");
     bar.style.animation = "none";
-    void bar.offsetWidth; // reflow
+    void bar.offsetWidth;
     bar.style.animation = "";
   }, 2400);
 }

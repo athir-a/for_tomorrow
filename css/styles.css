@@ -313,20 +313,22 @@ button {
 
 /* Header */
 .menu-topbar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 18px 16px 14px;
+  padding: 14px 48px 14px 16px; /* right padding leaves room for the ✕ */
   background: rgba(0, 0, 0, 0.35);
   flex-shrink: 0;
+  min-height: 56px;
 }
 .menu-leaf {
   font-size: 1.6em;
   line-height: 1;
   filter: drop-shadow(0 0 6px #4caf5088);
+  flex-shrink: 0;
 }
 .menu-title {
-  flex: 1;
   font-size: 1.05em;
   font-weight: 900;
   letter-spacing: 1.5px;
@@ -334,20 +336,25 @@ button {
   text-shadow: 0 2px 0 #6b2d00, 0 0 8px #ffa500aa;
   text-transform: uppercase;
 }
+/* ✕ pinned to top-right corner of the topbar */
 .menu-close {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
   background: none;
   border: none;
   color: #a5c8a5;
   font-size: 1.3em;
   line-height: 1;
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 6px 8px;
   border-radius: 6px;
   transition: color 0.2s, background 0.2s;
 }
 .menu-close:hover {
   color: #f8b700;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
 }
 .menu-close:focus-visible {
   outline: 2px solid #f8b700;
@@ -524,4 +531,123 @@ button {
 /* Utility */
 .center {
   text-align: center;
+}
+
+/* ── Star Wars Credits Screen ───────────────────────────────────────────────── */
+#credits {
+  background: #000;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  perspective: 300px;
+  perspective-origin: 50% 20%;
+}
+
+.crawl-wrap {
+  position: absolute;
+  bottom: 0;
+  width: min(700px, 88vw);
+  transform-origin: 50% 100%;
+  animation: crawlUp 28s linear forwards;
+}
+
+@keyframes crawlUp {
+  from { transform: rotateX(22deg) translateY(100vh); }
+  to   { transform: rotateX(22deg) translateY(-380%); }
+}
+
+.crawl-content {
+  text-align: center;
+  color: #ffe680;
+  padding: 0 40px 80px;
+  line-height: 1.75;
+}
+.crawl-content .crawl-title {
+  font-size: clamp(22px, 5vw, 42px);
+  font-weight: 900;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 0.2em;
+  color: #f8b700;
+  text-shadow: 0 0 18px #ffa500cc;
+}
+.crawl-content .crawl-sub {
+  font-size: clamp(13px, 2.5vw, 20px);
+  letter-spacing: 3px;
+  color: #c8d8ff;
+  margin-bottom: 2.5em;
+  text-transform: uppercase;
+}
+.crawl-content .crawl-rule {
+  border: none;
+  border-top: 2px solid #f8b70055;
+  margin: 1.6em auto;
+  width: 60%;
+}
+.crawl-content .crawl-body {
+  font-size: clamp(14px, 2.8vw, 22px);
+  margin-bottom: 1.2em;
+}
+.crawl-content .crawl-handle {
+  font-size: clamp(20px, 4vw, 32px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 3px;
+  text-shadow: 0 0 14px #ffffffbb;
+  margin: 0.4em 0;
+}
+.crawl-content .crawl-link {
+  font-size: clamp(12px, 2vw, 17px);
+  color: #90caf9;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.crawl-content .crawl-link:hover { text-decoration: underline; }
+.crawl-content .crawl-end {
+  margin-top: 3em;
+  font-size: clamp(13px, 2.2vw, 19px);
+  color: #8bc34a;
+  letter-spacing: 2px;
+}
+
+/* Top + bottom fade vignettes */
+#credits::before,
+#credits::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 22%;
+  pointer-events: none;
+  z-index: 2;
+}
+#credits::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000 0%, transparent 100%);
+}
+#credits::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000 0%, transparent 100%);
+}
+
+/* Back button */
+.credits-back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  background: rgba(10,10,10,0.85);
+  border: 2px solid #f8b700;
+  color: #f8b700;
+  font-size: 0.92em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.credits-back:hover {
+  background: #f8b700;
+  color: #000;
 }

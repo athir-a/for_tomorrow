@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -71,17 +71,14 @@
           <button class="btn events">Events</button>
           <button class="btn challenges">Challenges</button>
           <button class="btn leaderboard">Leaderboard</button>
-          <button
-            class="btn credits"
-            style="
+          <button class="btn credits" id="btnCredits" style="
               position: fixed;
               bottom: 20px;
               left: 45px;
               background-color: #2d4d2f;
               padding: 8px 16px;
               border-radius: 8px;
-            "
-          >
+            ">
             Credits
           </button>
         </div>
@@ -121,6 +118,37 @@
         what&apos;s ahead. Keep moving, and tomorrow will reveal itself. Walk for
         tomorrow.
       </p>
+    </section>
+
+    <!-- Credits: Star Wars crawl -->
+    <section id="credits" class="screen hidden">
+      <button class="credits-back" id="creditsBack">&#8592; Back</button>
+      <div class="crawl-wrap">
+        <div class="crawl-content">
+          <p class="crawl-title">For Tomorrow</p>
+          <p class="crawl-sub">Pixel Eco Quest &mdash; v0.1</p>
+          <hr class="crawl-rule" />
+          <p class="crawl-body">
+            A pixel-art interactive platform born from the belief that
+            small actions ripple into tomorrow.
+          </p>
+          <p class="crawl-body">
+            Built with &hearts; for the planet, for schools,
+            and for every student who dared to imagine a greener future.
+          </p>
+          <hr class="crawl-rule" />
+          <p class="crawl-body">Made by</p>
+          <p class="crawl-handle">athir-a</p>
+          <a
+            class="crawl-link"
+            href="https://github.com/athir-a"
+            target="_blank"
+            rel="noopener noreferrer"
+          >github.com/athir-a</a>
+          <hr class="crawl-rule" />
+          <p class="crawl-end">May the future be green. 🌱</p>
+        </div>
+      </div>
     </section>
 
     <script src="js/main.js"></script>
