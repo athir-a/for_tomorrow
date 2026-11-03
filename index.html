@@ -12,10 +12,10 @@
   <body>
     <!-- Screens -->
     <section id="menu" class="screen">
-      <canvas id="sky" class="sky" aria-hidden="true"></canvas>
+      <canvas class="sky" aria-hidden="true"></canvas>
 
       <div class="logo-wrapper">
-        <h1 class="logo">FOR TOMORROW</h1>
+        <h1 class="logo gold-title">FOR TOMORROW</h1>
       </div>
 
       <div class="island-area" id="islandArea">
@@ -32,23 +32,15 @@
           walk for tomorrow?<small>click the sun to proceed</small>
         </p>
 
-        <div class="hud-buttons">
-          <button class="btn credits" id="btnCredits">Credits</button>
-        </div>
       </div>
+
+      <!-- outside the floating island group so it stays pinned bottom-left -->
+      <button class="btn credits" id="btnCredits">Credits</button>
     </section>
 
     <section id="loading" class="screen hidden">
-      <div class="center">
-        <h1
-          style="
-            font-size: clamp(20px, 6vw, 48px);
-            text-shadow: 0 4px 0 #09223a;
-          "
-        >
-          Loading&hellip;
-        </h1>
-      </div>
+      <canvas class="sky" aria-hidden="true"></canvas>
+      <h1 class="loading-title gold-title center">Loading&hellip;</h1>
       <div class="loader" aria-label="Loading bar"></div>
       <p class="quote">
         &ldquo;at the end of the day we are just slightly evolved monkeys on a
@@ -58,7 +50,8 @@
 
     <!-- Intro: detailed instruction shown before play (final text: TBD by you) -->
     <section id="intro" class="screen hidden">
-      <h1 class="intro-title center">WALK FOR TOMORROW</h1>
+      <canvas class="sky" aria-hidden="true"></canvas>
+      <h1 class="intro-title gold-title center">Walk for Tomorrow</h1>
       <p class="intro-text center" id="introText">
         No rules. No hints. Just a road that waits. Every step whispers of
         what&apos;s ahead. Keep moving, and tomorrow will reveal itself. Walk for
@@ -74,16 +67,18 @@
 
     <!-- Ending message (final text: TBD by you) -->
     <section id="ending" class="screen hidden">
+      <canvas class="sky" aria-hidden="true"></canvas>
       <p class="ending-message center" id="endingMessage"></p>
       <button class="btn ending-credits" id="endingCredits">Credits</button>
     </section>
 
     <!-- Credits: Star Wars crawl -->
     <section id="credits" class="screen hidden">
-      <button class="credits-back" id="creditsBack">&#8592; Back</button>
+      <canvas class="sky" aria-hidden="true"></canvas>
+      <button class="btn credits-back" id="creditsBack">&#8592; Back</button>
       <div class="crawl-wrap">
         <div class="crawl-content">
-          <p class="crawl-title">For Tomorrow</p>
+          <h2 class="crawl-title gold-title">For Tomorrow</h2>
           <p class="crawl-sub">Pixel Eco Quest &mdash; v0.1</p>
           <hr class="crawl-rule" />
           <p class="crawl-body">

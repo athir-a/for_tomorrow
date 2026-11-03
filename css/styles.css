@@ -1,3 +1,24 @@
+/* Shared palette, sampled from the floating island art */
+:root {
+  --night: #04060a;      /* sky behind everything */
+  --grass-hi: #b4e05a;   /* sunlit grass */
+  --grass: #6fb23c;      /* grass */
+  --grass-dk: #3d7a2a;   /* shaded foliage */
+  --dirt-hi: #c98d52;    /* cliff highlight */
+  --dirt: #8a5530;       /* cliff */
+  --dirt-dk: #452512;    /* deep cliff / outlines */
+  --river: #63c9e3;      /* stream */
+  --river-dk: #2b7fae;
+  --cream: #fff0cf;      /* warm text, like the cabin light */
+  --gold-hi: #fff6c8;    /* sun highlight */
+  --gold: #ffc93c;       /* sun */
+  --gold-dk: #e3821f;    /* sun edge */
+  --ui-bg: rgba(8, 14, 12, 0.82);  /* minimal dark panels */
+  --ui-line: #3d7a2a;    /* panel border (shaded foliage) */
+  --pixel-font: "Silkscreen", monospace;               /* buttons only */
+  --clean-font: "Trebuchet MS", "Segoe UI", Verdana, Geneva, Tahoma, sans-serif;
+}
+
 /* Reset + pixel aesthetic */
 * {
   box-sizing: border-box;
@@ -8,7 +29,7 @@ html,
 body {
   height: 100%;
   background: #000;
-  font-family: "Trebuchet MS", Verdana, Geneva, Tahoma, sans-serif;
+  font-family: var(--clean-font);
 }
 body {
   image-rendering: pixelated;
@@ -30,7 +51,7 @@ button {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   pointer-events: none;
-  background: #050914;
+  background: var(--night);
 }
 /* soft vignette over the sky so the centre reads first */
 #menu::after {
@@ -39,7 +60,7 @@ button {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(2, 4, 10, 0.65) 100%);
+  background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(4, 7, 12, 0.7) 100%);
 }
 
 /* Layout containers */
@@ -65,31 +86,33 @@ button {
   z-index: 2;
 }
 .logo {
-  --o: 0.07em;   /* outline thickness */
-  --d: #1f4fd1;  /* ocean-blue outline */
-  --x: #0d2a73;  /* deep-ocean extrusion */
   display: inline-block;
-  font-family: "Silkscreen", monospace;
-  font-weight: 700;
-  font-size: clamp(30px, 8vw, 96px);
-  line-height: 1;
-  letter-spacing: 0.02em;
-  color: #b8f04f;
-  text-transform: uppercase;
-  text-shadow:
-    /* hard pixel outline */
-    var(--o) 0 0 var(--d), calc(var(--o) * -1) 0 0 var(--d),
-    0 var(--o) 0 var(--d), 0 calc(var(--o) * -1) 0 var(--d),
-    var(--o) var(--o) 0 var(--d), calc(var(--o) * -1) var(--o) 0 var(--d),
-    var(--o) calc(var(--o) * -1) 0 var(--d), calc(var(--o) * -1) calc(var(--o) * -1) 0 var(--d),
-    /* stepped 3D extrusion */
-    0 calc(var(--o) * 2) 0 var(--d), var(--o) calc(var(--o) * 2) 0 var(--d), calc(var(--o) * -1) calc(var(--o) * 2) 0 var(--d),
-    0 calc(var(--o) * 3) 0 var(--x), var(--o) calc(var(--o) * 3) 0 var(--x), calc(var(--o) * -1) calc(var(--o) * 3) 0 var(--x),
-    0 calc(var(--o) * 4) 0 var(--x);
-  animation: logoBob 3.2s steps(2, end) infinite alternate;
+  font-size: clamp(30px, 7.5vw, 92px);
+  line-height: 1.05;
+  animation: logoFloat 5s ease-in-out -1.2s infinite alternate;
 }
-@keyframes logoBob {
+@keyframes logoFloat {
   to { transform: translateY(-4px); }
+}
+
+/* Classy gold title (img 2): polished gold face, deep bronze drop, warm glow */
+.gold-title {
+  font-family: var(--clean-font);
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  color: #f6c53c;                       /* fallback if gradient text is unsupported */
+  /* soft sunlit gold, matched to the sun rather than orange */
+  background: linear-gradient(180deg, #fff1b8 0%, #ffd85a 40%, #f6c53c 60%, #dda42a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* drops use the island's cliff browns; glow is the sun's halo, softer */
+  filter:
+    drop-shadow(0 2px 0 #8a5530)
+    drop-shadow(0 3px 0 #452512)
+    drop-shadow(0 0 12px rgba(255, 200, 80, 0.32))
+    drop-shadow(0 0 36px rgba(255, 180, 60, 0.12));
 }
 .logo small {
   display: block;
@@ -103,6 +126,7 @@ button {
 .island-area {
   position: relative;
   z-index: 1;
+  animation: islandFloat 5s ease-in-out infinite alternate;
   width: min(92vw, 900px);
   height: min(60vh, 520px);
   margin: 0 auto;
@@ -118,15 +142,14 @@ button {
   filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.7));
   pointer-events: none;
   z-index: 1;
-  animation: islandFloat 4s steps(4, end) infinite alternate;
 }
 @keyframes islandFloat {
-  to { transform: translateY(-8px); }
+  to { transform: translateY(-7px); }
 }
 
 /* Sun + prompt */
 .sun {
-  --size: 84px;
+  --size: clamp(84px, 10vw, 118px);
   position: absolute;
   left: 50%;
   top: 47%;
@@ -135,41 +158,48 @@ button {
   margin-left: calc(var(--size) / -2);
   border-radius: 50%;
   background: radial-gradient(
-    circle at 35% 35%,
-    #fff3c4 0 18%,
-    #ffd25a 18% 42%,
-    #ffb400 42% 68%,
-    #ff8d00 68% 100%
+    circle at 50% 30%,
+    #fff1b8 0%,
+    #ffd85a 40%,
+    #f6c53c 62%,
+    #dda42a 100%
   );
-  box-shadow: 0 0 0 4px #ff8d0055, 0 0 0 8px #ff8d0026, 0 0 60px #ffae0066;
+  /* soft halo, same sunlit gold as the title glow */
+  box-shadow:
+    0 0 22px rgba(255, 210, 90, 0.45),
+    0 0 64px rgba(255, 200, 80, 0.24),
+    0 0 140px rgba(255, 180, 60, 0.12);
+  cursor: pointer;
   transform: translateY(45px);
-  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.2, 1);
+  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.2, 1), box-shadow 0.6s ease;
   z-index: 1;
 }
 .glow {
   position: absolute;
-  inset: 0;
+  inset: -50% -30%;          /* spill past the island box so the glow never clips */
+  pointer-events: none;
   background: radial-gradient(
-    ellipse at 50% 40%,
-    rgba(255, 200, 80, 0.18),
-    rgba(255, 200, 80, 0.05) 35%,
-    rgba(0, 0, 0, 0) 60%
+    circle 380px at 50% 38%, /* centred on the sun */
+    rgba(255, 205, 85, 0.20),
+    rgba(255, 185, 60, 0.07) 45%,
+    rgba(0, 0, 0, 0) 100%
   );
   opacity: 0;
   transition: opacity 0.6s ease;
   z-index: 0;
 }
 .prompt {
-  font-family: "Silkscreen", monospace;
-  text-shadow: 2px 2px 0 #050914;
+  font-family: var(--clean-font);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
   position: absolute;
   left: 50%;
   top: 18%;
   transform: translateX(-50%);
-  font-size: clamp(10px, 1.8vw, 14px);
-  color: #fff9;
+  font-size: clamp(14px, 2.2vw, 22px);
+  color: rgba(255, 255, 255, 0.62);
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -179,66 +209,87 @@ button {
   opacity: 0.9;
 }
 
-/* Menu buttons */
-.hud-buttons {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
+/* Button (img 1): bright lime-yellow block, dark pixel text, crisp dark edge */
 .btn {
   pointer-events: auto;
   position: absolute;
-  padding: 10px 20px;
-  font-family: "Silkscreen", monospace;
+  padding: 12px 26px 14px;
+  font-family: var(--pixel-font);
   font-weight: 700;
   font-size: 16px;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  background: #b8f04f;
-  color: #0d1b33;
-  border: none;
-  border-radius: 0;
-  /* stepped pixel border + bottom lip */
+  background: #e4f53c;
+  color: #1b1838;
+  border: 2px solid #14122a;
+  border-radius: 2px;
   box-shadow:
-    0 0 0 3px #0d1b33,
-    inset -3px -3px 0 #7fc23a,
-    inset 3px 3px 0 #e2ff9a,
-    0 6px 0 3px #0d1b33;
-  transition: transform 0.06s steps(1);
+    inset 0 -4px 0 #b4c620,          /* darker lip along the bottom */
+    inset 0 2px 0 #f4ff9a,           /* thin highlight along the top */
+    0 3px 0 #14122a;                 /* hard drop under the block */
+  transition: transform 0.08s ease, background 0.12s ease;
 }
-.btn:hover {
-  transform: translateY(-2px);
+.btn:hover,
+.btn:focus-visible {
+  outline: none;
+  background: #efff5c;
+  transform: translateY(-1px);
 }
 .btn:active {
-  transform: translateY(3px);
+  transform: translateY(2px);
   box-shadow:
-    0 0 0 3px #0d1b33,
-    inset 3px 3px 0 #7fc23a,
-    0 3px 0 3px #0d1b33;
+    inset 0 -2px 0 #b4c620,
+    0 1px 0 #14122a;
 }
 
 .btn.credits {
   position: fixed;
+  z-index: 3; /* above the sky vignette */
   left: 45px;
   bottom: 24px;
 }
 
 
-/* Loading screen */
-#loading {
-  background: radial-gradient(ellipse at 50% 40%, #0c1422, #04070b 70%);
-  color: #d6e6ff;
+/* ── Shared look for the story screens (loading, intro, ending) ─────────── */
+#loading,
+#intro,
+#ending {
+  background: var(--night);
+  color: var(--cream);
   flex-direction: column;
-  gap: 20px;
+  gap: 26px;
+  padding: 0 16px;
+}
+/* content sits above the star sky */
+#loading > :not(.sky),
+#intro > :not(.sky),
+#ending > p {
+  position: relative;
+  z-index: 1;
+}
+/* same dark edge shading as the title screen */
+#loading::after,
+#intro::after,
+#ending::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(4, 7, 12, 0.7) 100%);
+}
+/* Loading screen */
+.loading-title {
+  font-size: clamp(26px, 5vw, 52px);
 }
 .loader {
-  width: clamp(220px, 60vw, 520px);
-  height: 18px;
-  border: 4px solid #5fa8d3;
-  border-radius: 10px;
+  width: clamp(220px, 50vw, 460px);
+  height: 8px;
+  border-radius: 8px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 12px #5fa8d388, inset 0 0 12px #001d3d;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(246, 197, 60, 0.28);
 }
 .loader::after {
   content: "";
@@ -247,11 +298,10 @@ button {
   top: 0;
   bottom: 0;
   width: 0%;
-  background: repeating-linear-gradient(
-    -45deg,
-    #a9def9 0 12px,
-    #5fa8d3 12px 24px
-  );
+  border-radius: 8px;
+  /* same sunlit gold as the title + sun */
+  background: linear-gradient(90deg, #dda42a, #f6c53c 60%, #fff1b8);
+  box-shadow: 0 0 12px rgba(255, 210, 90, 0.55);
   animation: loadbar 2.2s ease-in-out forwards;
 }
 @keyframes loadbar {
@@ -260,12 +310,15 @@ button {
   }
 }
 .quote {
-  font-size: clamp(12px, 2.2vw, 18px);
-  opacity: 0.9;
+  font-family: var(--clean-font);
+  font-style: italic;
+  font-size: clamp(13px, 2vw, 18px);
+  color: rgba(255, 255, 255, 0.62);
+  letter-spacing: 0.5px;
+  line-height: 1.6;
   text-align: center;
-  max-width: 840px;
+  max-width: 720px;
 }
-
 
 /* Utility */
 .center {
@@ -274,7 +327,7 @@ button {
 
 /* ── Star Wars Credits Screen ───────────────────────────────────────────────── */
 #credits {
-  background: #000;
+  background: var(--night);
   overflow: hidden;
   flex-direction: column;
   align-items: center;
@@ -284,6 +337,7 @@ button {
 }
 
 .crawl-wrap {
+  z-index: 1;
   position: absolute;
   bottom: 0;
   width: min(700px, 88vw);
@@ -297,30 +351,30 @@ button {
 }
 
 .crawl-content {
+  font-family: var(--clean-font);
   text-align: center;
-  color: #ffe680;
+  color: var(--cream);
   padding: 0 40px 80px;
   line-height: 1.75;
 }
 .crawl-content .crawl-title {
-  font-size: clamp(22px, 5vw, 42px);
-  font-weight: 900;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  margin-bottom: 0.2em;
-  color: #f8b700;
-  text-shadow: 0 0 18px #ffa500cc;
+  display: inline-block;
+  font-family: var(--clean-font);
+  text-shadow: none; /* the crawl's pixel shadow would show through the gold gradient */
+  font-size: clamp(26px, 5.5vw, 48px);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.6em;
 }
 .crawl-content .crawl-sub {
   font-size: clamp(13px, 2.5vw, 20px);
   letter-spacing: 3px;
-  color: #c8d8ff;
+  color: var(--river);
   margin-bottom: 2.5em;
   text-transform: uppercase;
 }
 .crawl-content .crawl-rule {
   border: none;
-  border-top: 2px solid #f8b70055;
+  border-top: 4px dashed var(--dirt);
   margin: 1.6em auto;
   width: 60%;
 }
@@ -330,15 +384,15 @@ button {
 }
 .crawl-content .crawl-handle {
   font-size: clamp(20px, 4vw, 32px);
-  font-weight: 900;
-  color: #fff;
+  font-weight: 700;
+  color: var(--grass-hi);
   letter-spacing: 3px;
-  text-shadow: 0 0 14px #ffffffbb;
+  text-shadow: 3px 3px 0 var(--dirt-dk);
   margin: 0.4em 0;
 }
 .crawl-content .crawl-link {
   font-size: clamp(12px, 2vw, 17px);
-  color: #90caf9;
+  color: var(--river);
   text-decoration: none;
   letter-spacing: 1px;
 }
@@ -346,7 +400,7 @@ button {
 .crawl-content .crawl-end {
   margin-top: 3em;
   font-size: clamp(13px, 2.2vw, 19px);
-  color: #8bc34a;
+  color: var(--grass-hi);
   letter-spacing: 2px;
 }
 
@@ -362,60 +416,44 @@ button {
 }
 #credits::before {
   top: 0;
-  background: linear-gradient(to bottom, #000 0%, transparent 100%);
+  background: linear-gradient(to bottom, var(--night) 0%, transparent 100%);
 }
 #credits::after {
   bottom: 0;
-  background: linear-gradient(to top, #000 0%, transparent 100%);
+  background: linear-gradient(to top, var(--night) 0%, transparent 100%);
 }
 
-/* Back button */
-.credits-back {
+/* Back button (look comes from .btn) */
+.btn.credits-back {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 24px;
+  left: 24px;
   z-index: 10;
-  background: rgba(10,10,10,0.85);
-  border: 2px solid #f8b700;
-  color: #f8b700;
-  font-size: 0.92em;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 8px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-.credits-back:hover {
-  background: #f8b700;
-  color: #000;
 }
 
 /* ── Intro (instructions before play) ───────────────────────────────────── */
 #intro {
-  background: #001219;
-  color: #eafff7;
-  flex-direction: column;
-  gap: 24px;
-  padding: 0 16px;
   cursor: pointer;
 }
 #intro .intro-title {
-  font-size: clamp(20px, 6vw, 44px);
-  text-shadow: 0 4px 0 #003844;
+  font-size: clamp(28px, 6vw, 64px);
 }
 #intro .intro-text {
-  max-width: 880px;
-  opacity: 0.85;
-  line-height: 1.6;
+  max-width: 760px;
+  font-size: clamp(14px, 2vw, 19px);
+  line-height: 1.75;
+  color: rgba(255, 240, 207, 0.85);
 }
 #intro .intro-continue {
-  font-size: 0.8em;
-  opacity: 0.5;
-  animation: introBlink 2s ease-in-out infinite;
+  font-family: var(--clean-font);
+  font-size: clamp(12px, 1.6vw, 15px);
+  color: rgba(255, 255, 255, 0.62);
+  letter-spacing: 3px;
+  text-transform: lowercase;
+  animation: introBlink 2.4s ease-in-out infinite;
 }
 @keyframes introBlink {
-  50% { opacity: 0.15; }
+  50% { opacity: 0.25; }
 }
 
 /* ── Game canvas ────────────────────────────────────────────────────────── */
@@ -430,20 +468,16 @@ button {
 }
 
 /* ── Ending message screen ──────────────────────────────────────────────── */
-#ending {
-  background: #000;
-  color: #eafff7;
-  flex-direction: column;
-  gap: 24px;
-  padding: 0 16px;
-}
 #ending .ending-message {
-  max-width: 760px;
-  line-height: 1.6;
-  font-size: clamp(14px, 2.4vw, 20px);
+  max-width: 720px;
+  line-height: 1.75;
+  font-size: clamp(15px, 2.4vw, 21px);
+  color: rgba(255, 240, 207, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 #ending .ending-credits {
   position: fixed;
+  z-index: 3;
   bottom: 20px;
   left: 0;
   right: 0;
