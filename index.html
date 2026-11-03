@@ -4,49 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>For Tomorrow — Pixel Eco Quest</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <!-- Screens -->
     <section id="menu" class="screen">
-      <div class="stars"></div>
-
-      <!-- Backdrop: clicking it closes the drawer -->
-      <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
-
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-        <span class="bar bar-top"></span>
-        <span class="bar bar-mid"></span>
-        <span class="bar bar-bot"></span>
-      </button>
-
-      <nav class="drawer" id="drawer" aria-label="Site menu" aria-hidden="true">
-        <!-- Header -->
-        <div class="menu-topbar">
-          <span class="menu-leaf" aria-hidden="true">🌱</span>
-          <div class="menu-title">FOR TOMORROW</div>
-          <button class="menu-close" id="menuClose" aria-label="Close menu">&#x2715;</button>
-        </div>
-        <div class="menu-divider"></div>
-
-        <!-- Nav items -->
-        <ul class="menu-items">
-          <li><a href="#" data-nav="profile">    <span class="mi-icon">🌱</span> My Profile</a></li>
-          <li><a href="#" data-nav="events">     <span class="mi-icon">🏫</span> School Events</a></li>
-          <li><a href="#" data-nav="challenges"> <span class="mi-icon">⚡</span> Daily Challenges</a></li>
-          <li><a href="#" data-nav="tasks">      <span class="mi-icon">🌍</span> Real&#8209;World Tasks</a></li>
-          <li><a href="#" data-nav="leaderboard"><span class="mi-icon">🏆</span> Leaderboard</a></li>
-          <li><a href="#" data-nav="achievements"><span class="mi-icon">🎖️</span> Achievements &amp; Titles</a></li>
-          <li><a href="#" data-nav="resources">  <span class="mi-icon">📚</span> Eco Resources</a></li>
-          <li class="mi-divider"></li>
-          <li><a href="#" data-nav="settings">   <span class="mi-icon">⚙️</span> Settings</a></li>
-          <li><a href="#" data-nav="help">       <span class="mi-icon">🛡️</span> Help &amp; Safety</a></li>
-          <li><a href="#" data-nav="credits">    <span class="mi-icon">🎬</span> Credits</a></li>
-        </ul>
-
-        <!-- Footer -->
-        <div class="menu-footer">v0.1 &mdash; Pixel Eco Quest</div>
-      </nav>
+      <canvas id="sky" class="sky" aria-hidden="true"></canvas>
 
       <div class="logo-wrapper">
         <h1 class="logo">FOR TOMORROW</h1>
@@ -67,20 +33,7 @@
         </p>
 
         <div class="hud-buttons">
-          <button class="btn start" id="btnStart">Start</button>
-          <button class="btn events">Events</button>
-          <button class="btn challenges">Challenges</button>
-          <button class="btn leaderboard">Leaderboard</button>
-          <button class="btn credits" id="btnCredits" style="
-              position: fixed;
-              bottom: 20px;
-              left: 45px;
-              background-color: #2d4d2f;
-              padding: 8px 16px;
-              border-radius: 8px;
-            ">
-            Credits
-          </button>
+          <button class="btn credits" id="btnCredits">Credits</button>
         </div>
       </div>
     </section>
@@ -103,21 +56,26 @@
       </p>
     </section>
 
-    <section id="minigame" class="screen hidden">
-      <h1
-        class="center"
-        style="font-size: clamp(20px, 6vw, 44px); text-shadow: 0 4px 0 #003844"
-      >
-        WALK FOR TOMORROW
-      </h1>
-      <div class="game-stage">
-        <button class="play-btn">PLAY</button>
-      </div>
-      <p class="center" style="opacity: 0.8; max-width: 880px">
+    <!-- Intro: detailed instruction shown before play (final text: TBD by you) -->
+    <section id="intro" class="screen hidden">
+      <h1 class="intro-title center">WALK FOR TOMORROW</h1>
+      <p class="intro-text center" id="introText">
         No rules. No hints. Just a road that waits. Every step whispers of
         what&apos;s ahead. Keep moving, and tomorrow will reveal itself. Walk for
         tomorrow.
       </p>
+      <p class="intro-continue center">press any key</p>
+    </section>
+
+    <!-- Game: single pixel canvas (480×270 internal, scaled up) -->
+    <section id="game" class="screen hidden">
+      <canvas id="gameCanvas" width="480" height="270"></canvas>
+    </section>
+
+    <!-- Ending message (final text: TBD by you) -->
+    <section id="ending" class="screen hidden">
+      <p class="ending-message center" id="endingMessage"></p>
+      <button class="btn ending-credits" id="endingCredits">Credits</button>
     </section>
 
     <!-- Credits: Star Wars crawl -->
@@ -151,6 +109,7 @@
       </div>
     </section>
 
+    <script src="js/sky.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
